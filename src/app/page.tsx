@@ -351,13 +351,45 @@ export default function Home() {
 
               <div className="rounded-2xl border border-purple-300/20 bg-purple-400/10 p-5">
                 <p className="font-semibold text-purple-100">
-                  Próximo passo técnico: mint real de cNFT.
+                  Prova técnica Solana: cNFT real em devnet.
                 </p>
                 <p className="mt-2 text-sm text-purple-50/80">
-                  A versão atual conecta carteira Solana e demonstra o fluxo. Em produção,
-                  este Asset ID simulado será substituído por um cNFT real emitido via
-                  Underdog ou integração direta com Solana.
+                  O app publicado conecta Phantom e usa uma rota backend de emissão. Em
+                  paralelo, um script separado com Metaplex Bubblegum executou mint real de
+                  cNFT na Solana Devnet, sem depender de serviço pago.
                 </p>
+
+                <div className="mt-4 grid gap-3 text-sm">
+                  <div>
+                    <p className="text-purple-200/70">Mint mode</p>
+                    <p className="font-semibold text-purple-50">
+                      Backend fallback + Bubblegum real mint experiment
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-purple-200/70">Merkle Tree</p>
+                    <p className="break-all font-semibold text-purple-50">
+                      9KmgNsDFmottejP9ug3DMRKVg79Vc1yPVNvUJHvDJ6cy
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-purple-200/70">Tree Config</p>
+                    <p className="break-all font-semibold text-purple-50">
+                      5F1dk877qiuuomwuZaYLNDrWmwf39mTVrBS844xure6b
+                    </p>
+                  </div>
+
+                  <a
+                    href="https://explorer.solana.com/tx/5eKTkFdcUSwfPbTdoLhuA9iYe4Xr4Cg3x8yM6amGFmwZ16bA4YfmdQhqNvcZ9f86UYecaCqz8RFwRZmv2dTg6ASf?cluster=devnet"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-2 inline-flex w-fit rounded-full bg-purple-200 px-4 py-2 font-semibold text-slate-950 transition hover:bg-purple-100"
+                  >
+                    Ver transação real no Solana Explorer
+                  </a>
+                </div>
               </div>
             </div>
           </div>

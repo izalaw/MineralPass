@@ -124,12 +124,40 @@ export default function Home() {
     }
   }
 
-  function issueMineralPass() {
-    const cleanLot = lotId.replace(/[^a-zA-Z0-9]/g, "").slice(-8);
-    setAssetId(`cnft_${cleanLot}_${Math.random().toString(36).slice(2, 8)}`);
+  async function issueMineralPass() {
+  setAssetId("Gerando passaporte via API...");
+
+  try {
+    const response = await fetch("/api/mint", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        company,
+        mineral,
+        origin,
+        volume,
+        lotId,
+        hash,
+        walletAddress: walletAddress || null,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      setAssetId("Erro ao emitir Mineral Pass");
+      return;
+    }
+
+    setAssetId(data.assetId);
     setUnlocked(false);
     setDocumentCode("");
+  } catch {
+    setAssetId("Erro ao conectar com a API de mint");
   }
+}
 
   function updateAttestation(id: string, status: AttestationStatus) {
     setAttestations((current) =>

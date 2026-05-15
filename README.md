@@ -182,3 +182,42 @@ Projeto criado para o Hackathon BH Onchain / Solana SuperteamBR.
 Foco:
 
 Infraestrutura de conformidade para exportação de minerais críticos brasileiros usando verificação de ativos em Solana.
+
+---
+
+## Experimento técnico: mint real de cNFT na Solana Devnet
+
+Além do MVP publicado, o projeto inclui um experimento técnico separado usando Metaplex Bubblegum para criar e mintar cNFTs diretamente na Solana Devnet, sem depender de serviço pago como Underdog.
+
+Esse experimento é isolado do app principal para não comprometer a estabilidade da demo pública.
+
+### O que foi implementado
+
+- criação de wallet experimental para devnet;
+- funding com SOL devnet via faucet;
+- criação de Bubblegum Merkle Tree real;
+- criação de Tree Config real;
+- execução de mint real usando `mintV2`;
+- geração de transação verificável no Solana Explorer.
+
+### Transação de mint real
+
+Explorer:
+
+https://explorer.solana.com/tx/5eKTkFdcUSwfPbTdoLhuA9iYe4Xr4Cg3x8yM6amGFmwZ16bA4YfmdQhqNvcZ9f86UYecaCqz8RFwRZmv2dTg6ASf?cluster=devnet
+
+### Arquivos técnicos relacionados
+
+- `scripts/create-devnet-wallet.ts`
+- `scripts/check-devnet-balance.ts`
+- `scripts/check-tree-accounts.ts`
+- `scripts/mint-on-existing-tree.ts`
+- `scripts/mint-cnft-bubblegum-test.ts`
+- `scripts/mint-cnft-bubblegum-v2-test.ts`
+
+A chave da wallet experimental fica em `scripts/devnet-wallet.json` e está protegida pelo `.gitignore`, portanto não é enviada ao GitHub.
+
+### Decisão técnica
+
+O app principal mantém uma rota `/api/mint` com fallback de Asset ID simulado para garantir estabilidade da demo. O experimento Bubblegum comprova que o mint real de cNFT na Solana Devnet é tecnicamente viável e pode ser integrado ao fluxo principal em uma próxima iteração.
+

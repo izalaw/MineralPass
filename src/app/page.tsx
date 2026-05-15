@@ -46,6 +46,9 @@ export default function Home() {
   const [volume, setVolume] = useState("24 toneladas");
   const [lotId, setLotId] = useState("LIT-VALE-2026-001");
   const [assetId, setAssetId] = useState("");
+  const [mintMode, setMintMode] = useState("");
+  const [mintNetwork, setMintNetwork] = useState("");
+  const [mintProofTx, setMintProofTx] = useState("");
   const [documentCode, setDocumentCode] = useState("");
   const [unlocked, setUnlocked] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
@@ -126,6 +129,9 @@ export default function Home() {
 
   async function issueMineralPass() {
   setAssetId("Gerando passaporte via API...");
+  setMintMode("");
+  setMintNetwork("");
+  setMintProofTx("");
 
   try {
     const response = await fetch("/api/mint", {
@@ -152,6 +158,9 @@ export default function Home() {
     }
 
     setAssetId(data.assetId);
+    setMintMode(data.mode || "");
+    setMintNetwork(data.network || "");
+    setMintProofTx(data.solanaProof?.transaction || "");
     setUnlocked(false);
     setDocumentCode("");
   } catch {
@@ -338,6 +347,34 @@ export default function Home() {
                   <p className="mt-2 break-all font-semibold text-blue-200">{hash}</p>
                 </div>
               </div>
+
+              {mintMode && (
+                <div className="rounded-2xl border border-blue-300/20 bg-blue-400/10 p-5">
+                  <p className="font-semibold text-blue-100">
+                    Resposta técnica da rota /api/mint
+                  </p>
+                  <div className="mt-3 grid gap-2 text-sm text-blue-50/80">
+                    <p>
+                      <span className="text-blue-200/70">Mode:</span>{" "}
+                      <span className="font-semibold">{mintMode}</span>
+                    </p>
+                    <p>
+                      <span className="text-blue-200/70">Network:</span>{" "}
+                      <span className="font-semibold">{mintNetwork}</span>
+                    </p>
+                    {mintProofTx && (
+                      <a
+                        href={mintProofTx}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-2 inline-flex w-fit rounded-full bg-blue-200 px-4 py-2 font-semibold text-slate-950 transition hover:bg-blue-100"
+                      >
+                        Abrir prova Bubblegum no Explorer
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
 
               <div className="rounded-2xl border border-amber-300/20 bg-amber-400/10 p-5">
                 <p className="font-semibold text-amber-100">

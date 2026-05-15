@@ -1,36 +1,184 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mineral Pass
 
-## Getting Started
+Passaporte digital de conformidade para minerais críticos brasileiros usando Solana cNFTs.
 
-First, run the development server:
+Demo pública: https://mineral-pass.vercel.app/
 
-```bash
+## Problema
+
+Minerais críticos como lítio, nióbio, grafite, terras raras e cobalto são estratégicos para cadeias globais de energia, baterias e tecnologia.
+
+Exportadores brasileiros precisam comprovar origem, regularidade regulatória, documentação ambiental, conformidade trabalhista e rastreabilidade da cadeia de custódia.
+
+Ao mesmo tempo, compradores internacionais precisam fazer due diligence sem que o exportador exponha segredos comerciais como preço, contrato, comprador, rota logística e documentos privados.
+
+## Solução
+
+O Mineral Pass cria um passaporte digital de conformidade para cada lote mineral.
+
+A proposta é representar cada lote por um cNFT em Solana, registrando metadados públicos e hashes verificáveis, enquanto documentos sensíveis permanecem off-chain com acesso controlado.
+
+Ideia central:
+
+Dados sensíveis off-chain. Prova verificável on-chain.
+
+## Status atual do MVP
+
+O MVP atual é um protótipo funcional publicado na Vercel.
+
+Implementado:
+
+- aplicação em Next.js;
+- formulário de criação de lote mineral;
+- emissão simulada de Mineral Pass;
+- geração simulada de Asset ID cNFT;
+- geração de hash a partir dos dados do lote;
+- checklist de conformidade;
+- status automático: Missing attestation ou Export-ready;
+- acesso seletivo a documento usando código;
+- deploy público na Vercel;
+- repositório privado no GitHub para jurados.
+
+Código de demonstração:
+
+MINERAL2026
+
+Limitação atual:
+
+O MVP ainda não minta um cNFT real em Solana. O Asset ID cNFT exibido é simulado para demonstrar o fluxo do produto. A emissão real de cNFT em Solana está no roadmap técnico imediato.
+
+## Por que Solana
+
+Solana é adequada para esse caso porque permite:
+
+- emissão em escala;
+- baixo custo por registro;
+- verificação rápida;
+- auditabilidade pública;
+- uso de compressed NFTs;
+- infraestrutura escalável para registros de ativos.
+
+## Arquitetura atual
+
+Usuário
+↓
+Front-end Next.js
+↓
+Formulário do lote mineral
+↓
+Geração de hash
+↓
+Asset ID cNFT simulado
+↓
+Checklist de conformidade
+↓
+Interface pública de verificação
+
+## Arquitetura alvo
+
+Exportador
+↓
+Front-end Next.js
+↓
+API Route segura
+↓
+Underdog ou integração Solana para mint de cNFT
+↓
+Solana devnet/mainnet
+↓
+Asset ID real + hash de metadata
+↓
+Interface de verificação para comprador
+
+## Modelo de conformidade
+
+O Mineral Pass não representa direito minerário, participação societária, valor mobiliário ou propriedade do subsolo.
+
+Ele representa um passaporte digital de conformidade vinculado ao output de um lote mineral.
+
+O passaporte pode incluir:
+
+- origem declarada;
+- regularidade relacionada à ANM;
+- documentação ambiental;
+- conformidade trabalhista;
+- futuras atestações de carbono e ESG.
+
+## Roadmap
+
+### MVP do Hackathon
+
+- protótipo interativo;
+- criação de lote;
+- checklist de conformidade;
+- Asset ID cNFT simulado;
+- verificação por hash;
+- demo pública na Vercel.
+
+### Técnico v1
+
+- conexão com Phantom Wallet;
+- integração real com Solana devnet;
+- mint real de cNFT;
+- API route segura;
+- retorno de Asset ID real para a interface;
+- integração com storage de documentos.
+
+### Produção v1
+
+- documentos off-chain cifrados;
+- perfis de exportador, atestador e comprador;
+- expiração e revogação de atestações;
+- trilha de auditoria;
+- integração com certificadoras.
+
+### Produção v2
+
+- integração com bases regulatórias públicas;
+- dashboards institucionais;
+- eventos de cadeia de custódia;
+- integração com ERP e logística;
+- fluxos formais de disputa e revogação.
+
+## Stack
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Vercel
+- Solana cNFTs planejados
+- Phantom Wallet planejada
+- Underdog planejado
+
+## Como rodar localmente
+
+git clone https://github.com/izalaw/MineralPass.git
+
+cd MineralPass
+
+npm install
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrir:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Fluxo da demo
 
-## Learn More
+1. Abrir a demo pública.
+2. Clicar em "Emitir Mineral Pass".
+3. Ver o Asset ID cNFT simulado.
+4. Alterar as atestações para "Valid".
+5. Confirmar que o status muda para "Export-ready".
+6. Inserir o código MINERAL2026.
+7. Liberar o documento mockado de due diligence.
 
-To learn more about Next.js, take a look at the following resources:
+## Hackathon
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Projeto criado para o Hackathon BH Onchain / Solana SuperteamBR.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Foco:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Infraestrutura de conformidade para exportação de minerais críticos brasileiros usando verificação de ativos em Solana.

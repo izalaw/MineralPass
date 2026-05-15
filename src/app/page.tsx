@@ -11,6 +11,18 @@ type Attestation = {
   status: AttestationStatus;
 };
 
+type PhantomProvider = {
+  isPhantom?: boolean;
+  connect: () => Promise<{ publicKey: { toString: () => string } }>;
+  disconnect?: () => Promise<void>;
+};
+
+declare global {
+  interface Window {
+    solana?: PhantomProvider;
+  }
+}
+
 const statusLabels: Record<AttestationStatus, string> = {
   valid: "Valid",
   missing: "Missing",
@@ -36,6 +48,8 @@ export default function Home() {
   const [assetId, setAssetId] = useState("");
   const [documentCode, setDocumentCode] = useState("");
   const [unlocked, setUnlocked] = useState(false);
+  const [walletAddress, setWalletAddress] = useState("");
+  const [walletError, setWalletError] = useState("");
 
   const [attestations, setAttestations] = useState<Attestation[]>([
     {
@@ -83,6 +97,33 @@ export default function Home() {
       .toLowerCase()}`;
   }, [company, mineral, origin, volume, lotId]);
 
+  async function connectWallet() {
+    setWalletError("");
+
+    try {
+      const provider = window.solana;
+
+      if (!provider?.isPhantom) {
+        setWalletError("Phantom Wallet não encontrada. Instale a extensão para conectar.");
+        return;
+      }
+
+      const response = await provider.connect();
+      setWalletAddress(response.publicKey.toString());
+    } catch {
+      setWalletError("Conexão recusada ou cancelada na Phantom.");
+    }
+  }
+
+  async function disconnectWallet() {
+    try {
+      await window.solana?.disconnect?.();
+      setWalletAddress("");
+    } catch {
+      setWalletAddress("");
+    }
+  }
+
   function issueMineralPass() {
     const cleanLot = lotId.replace(/[^a-zA-Z0-9]/g, "").slice(-8);
     setAssetId(`cnft_${cleanLot}_${Math.random().toString(36).slice(2, 8)}`);
@@ -108,7 +149,7 @@ export default function Home() {
             Mineral Pass
           </p>
 
-          <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-end">
+          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
             <div>
               <h1 className="max-w-4xl text-4xl font-bold tracking-tight md:text-6xl">
                 Passaporte digital de conformidade para minerais críticos brasileiros.
@@ -121,16 +162,57 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="rounded-3xl border border-emerald-300/20 bg-emerald-400/10 p-5">
-              <p className="text-sm uppercase tracking-[0.2em] text-emerald-200">
-                Status do lote
-              </p>
-              <h2 className="mt-3 text-3xl font-bold">
-                {exportReady ? "Export-ready" : "Missing attestation"}
-              </h2>
-              <p className="mt-3 text-sm text-emerald-50/80">
-                O comprador verifica pendências antes de avançar na negociação.
-              </p>
+            <div className="grid gap-4">
+              <div className="rounded-3xl border border-emerald-300/20 bg-emerald-400/10 p-5">
+                <p className="text-sm uppercase tracking-[0.2em] text-emerald-200">
+                  Status do lote
+                </p>
+                <h2 className="mt-3 text-3xl font-bold">
+                  {exportReady ? "Export-ready" : "Missing attestation"}
+                </h2>
+                <p className="mt-3 text-sm text-emerald-50/80">
+                  O comprador verifica pendências antes de avançar na negociação.
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-blue-300/20 bg-blue-400/10 p-5">
+                <p className="text-sm uppercase tracking-[0.2em] text-blue-200">
+                  Solana Devnet
+                </p>
+
+                {walletAddress ? (
+                  <div>
+                    <p className="mt-3 text-sm text-blue-50/80">
+                      Wallet conectada como exportador:
+                    </p>
+                    <p className="mt-2 break-all text-sm font-semibold text-blue-100">
+                      {walletAddress}
+                    </p>
+                    <button
+                      onClick={disconnectWallet}
+                      className="mt-4 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+                    >
+                      Desconectar wallet
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="mt-3 text-sm text-blue-50/80">
+                      Conecte a Phantom para demonstrar integração real com carteira Solana.
+                    </p>
+                    <button
+                      onClick={connectWallet}
+                      className="mt-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-slate-200"
+                    >
+                      Connect Phantom Wallet
+                    </button>
+                  </div>
+                )}
+
+                {walletError && (
+                  <p className="mt-3 text-sm text-amber-200">{walletError}</p>
+                )}
+              </div>
             </div>
           </div>
         </header>
@@ -194,7 +276,7 @@ export default function Home() {
                 onClick={issueMineralPass}
                 className="mt-2 rounded-full bg-emerald-400 px-5 py-3 font-semibold text-slate-950 transition hover:bg-emerald-300"
               >
-                Emitir Mineral Pass
+                Emitir Mineral Pass demo
               </button>
             </div>
           </div>
@@ -217,9 +299,9 @@ export default function Home() {
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-5">
-                  <p className="text-sm text-slate-400">Asset ID cNFT</p>
+                  <p className="text-sm text-slate-400">Asset ID cNFT simulado</p>
                   <p className="mt-2 break-all font-semibold text-emerald-200">
-                    {assetId || "Clique em “Emitir Mineral Pass”"}
+                    {assetId || "Clique em “Emitir Mineral Pass demo”"}
                   </p>
                 </div>
 
@@ -236,6 +318,17 @@ export default function Home() {
                 <p className="mt-2 text-sm text-amber-50/80">
                   Preço, contrato, comprador e documentos completos não ficam públicos.
                   O MVP registra apenas hash, status e metadados mínimos.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-purple-300/20 bg-purple-400/10 p-5">
+                <p className="font-semibold text-purple-100">
+                  Próximo passo técnico: mint real de cNFT.
+                </p>
+                <p className="mt-2 text-sm text-purple-50/80">
+                  A versão atual conecta carteira Solana e demonstra o fluxo. Em produção,
+                  este Asset ID simulado será substituído por um cNFT real emitido via
+                  Underdog ou integração direta com Solana.
                 </p>
               </div>
             </div>

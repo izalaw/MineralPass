@@ -281,6 +281,50 @@ export default function Home() {
           </div>
         </header>
 
+        <section className="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <p className="text-sm uppercase tracking-[0.2em] text-slate-400">
+            Arquitetura técnica
+          </p>
+          <h2 className="mt-2 text-2xl font-bold">
+            Frontend, backend e prova on-chain conectados.
+          </h2>
+
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            <div className="rounded-2xl border border-emerald-300/20 bg-emerald-400/10 p-5">
+              <p className="text-sm uppercase tracking-[0.2em] text-emerald-200">
+                Frontend
+              </p>
+              <h3 className="mt-3 text-xl font-bold">Next.js + Phantom</h3>
+              <p className="mt-2 text-sm text-emerald-50/80">
+                Interface em Next.js com conexão real à Phantom Wallet para demonstrar
+                identidade Solana do exportador.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-blue-300/20 bg-blue-400/10 p-5">
+              <p className="text-sm uppercase tracking-[0.2em] text-blue-200">
+                Backend
+              </p>
+              <h3 className="mt-3 text-xl font-bold">/api/mint + APIs de prova</h3>
+              <p className="mt-2 text-sm text-blue-50/80">
+                Rota /api/mint gera o Mineral Pass via fallback estável e expõe
+                metadados técnicos. /api/proof e /api/health validam a demo.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-purple-300/20 bg-purple-400/10 p-5">
+              <p className="text-sm uppercase tracking-[0.2em] text-purple-200">
+                Solana proof
+              </p>
+              <h3 className="mt-3 text-xl font-bold">Bubblegum cNFT em devnet</h3>
+              <p className="mt-2 text-sm text-purple-50/80">
+                Script separado com Metaplex Bubblegum executou mint real de cNFT
+                na Solana Devnet, com transação verificável no Explorer.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
             <p className="text-sm uppercase tracking-[0.2em] text-slate-400">

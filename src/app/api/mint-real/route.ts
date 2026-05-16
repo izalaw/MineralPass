@@ -53,6 +53,23 @@ export async function POST(request: Request) {
       );
     }
 
+    const body = await request.json().catch(() => ({}));
+    const lotId = body.lotId || "LIT-VALE-2026-001";
+    const mineral = body.mineral || "Lithium";
+    const origin = body.origin || "Brazil";
+    const ownerWallet = body.ownerWallet;
+
+    if (!ownerWallet || typeof ownerWallet !== "string") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Missing ownerWallet",
+        },
+        { status: 400 },
+      );
+    }
+
+    const owner = publicKey(ownerWallet);
     const umi = createUmi(DEVNET_RPC);
 
     const secretKey = loadDevnetSecretKey();
@@ -64,14 +81,14 @@ export async function POST(request: Request) {
     const balance = await umi.rpc.getBalance(publicKey(signer.publicKey));
 
     const mintBuilder = await mintV2(umi, {
-      leafOwner: signer.publicKey,
-      leafDelegate: signer.publicKey,
+      leafOwner: owner,
+      leafDelegate: owner,
       merkleTree: publicKey(MERKLE_TREE),
       treeConfig: publicKey(TREE_CONFIG),
       treeCreatorOrDelegate: signer,
       metadata: {
-        name: "Mineral Pass 001",
-        uri: "https://mineral-pass.vercel.app/lots/LIT-VALE-2026-001",
+        name: `Mineral Pass - ${lotId}`,
+        uri: `https://mineral-pass.vercel.app/lots/${lotId}`,
         sellerFeeBasisPoints: 0,
         collection: none(),
         creators: [
@@ -97,6 +114,10 @@ export async function POST(request: Request) {
       network: "solana-devnet",
       standard: "Metaplex Bubblegum cNFT",
       signer: signer.publicKey,
+      ownerWallet: owner,
+      lotId,
+      mineral,
+      origin,
       balanceBeforeMint: `${Number(balance.basisPoints) / 1_000_000_000} SOL devnet`,
       merkleTree: MERKLE_TREE,
       treeConfig: TREE_CONFIG,

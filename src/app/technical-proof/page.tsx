@@ -147,6 +147,44 @@ export default function TechnicalProofPage() {
             </div>
           </div>
         </div>
+
+        <div className="mt-8 rounded-3xl border border-blue-300/20 bg-blue-400/10 p-6">
+          <h2 className="text-2xl font-bold text-blue-100">
+            Endpoints públicos de verificação
+          </h2>
+
+          <p className="mt-3 text-slate-300">
+            Além da interface visual, o projeto expõe APIs simples para verificar
+            o status técnico da demo e a prova Solana em formato estruturado.
+          </p>
+
+          <div className="mt-5 grid gap-3">
+            <a
+              href="/api/proof"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl border border-white/10 bg-slate-900/80 p-4 transition hover:bg-slate-800"
+            >
+              <p className="font-semibold text-blue-200">/api/proof</p>
+              <p className="mt-1 text-sm text-slate-400">
+                Retorna Merkle Tree, Tree Config, transação real e status do mint cNFT.
+              </p>
+            </a>
+
+            <a
+              href="/api/health"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-2xl border border-white/10 bg-slate-900/80 p-4 transition hover:bg-slate-800"
+            >
+              <p className="font-semibold text-blue-200">/api/health</p>
+              <p className="mt-1 text-sm text-slate-400">
+                Retorna status geral do app, rede, backend e prova técnica Solana.
+              </p>
+            </a>
+          </div>
+        </div>
+
       </section>
     </main>
   );

@@ -38,8 +38,21 @@ function loadDevnetSecretKey() {
   return new Uint8Array(walletFile.secretKey as number[]);
 }
 
-export async function POST() {
+export async function POST(request: Request) {
   try {
+    const authHeader = request.headers.get("authorization");
+    const expectedToken = process.env.MINT_REAL_API_TOKEN;
+
+    if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Unauthorized",
+        },
+        { status: 401 },
+      );
+    }
+
     const umi = createUmi(DEVNET_RPC);
 
     const secretKey = loadDevnetSecretKey();

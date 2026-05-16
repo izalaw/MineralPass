@@ -197,6 +197,33 @@ export default function Home() {
                 e atestações regulatórias, ambientais e trabalhistas — preservando
                 segredos comerciais do exportador.
               </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="/technical-proof"
+                  className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-slate-200"
+                >
+                  Ver prova técnica Solana
+                </a>
+
+                <a
+                  href="/api/proof"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+                >
+                  API proof
+                </a>
+
+                <a
+                  href="/api/health"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+                >
+                  API health
+                </a>
+              </div>
             </div>
 
             <div className="grid gap-4">

@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "devnet:balance": "tsx scripts/check-devnet-balance.ts",
+    "devnet:check-tree": "tsx scripts/check-tree-accounts.ts",
+    "devnet:mint": "tsx scripts/mint-on-existing-tree.ts"
   },
   "dependencies": {
     "@metaplex-foundation/mpl-bubblegum": "^5.0.2",

@@ -4,26 +4,38 @@ export async function GET() {
   return NextResponse.json({
     status: "ok",
     project: "Mineral Pass",
-    environment: "production-ready-demo",
+    environment: "production-real-cnft-demo",
     network: "solana-devnet",
+
     frontend: {
       framework: "Next.js",
       wallet: "Phantom Wallet Connect",
       deployed: true,
       url: "https://mineral-pass.vercel.app",
     },
+
     backend: {
       apiMintRoute: "/api/mint",
+      apiMintRealRoute: "/api/mint-real",
       apiProofRoute: "/api/proof",
       apiHealthRoute: "/api/health",
-      mintMode: "backend-fallback",
+      mintMode: "protected-real-bubblegum-cnft",
+      protectedMintEndpoint: true,
+      ownerWalletMintSupport: true,
     },
+
     solana: {
-      realCnftMintExperiment: true,
+      realCnftMintProduction: true,
       standard: "Metaplex Bubblegum cNFT",
+      network: "Solana Devnet",
+      merkleTree: "9KmgNsDFmottejP9ug3DMRKVg79Vc1yPVNvUJHvDJ6cy",
+      treeConfig: "5F1dk877qiuuomwuZaYLNDrWmwf39mTVrBS844xure6b",
+      backendSigner: "4YhAJxbcmh4PJunKywgyGpxbHi9oKfy4CfRXLvNXgtEZ",
       technicalProofUrl: "https://mineral-pass.vercel.app/technical-proof",
+      latestConfirmedTransaction:
+        "22p3nCDbex6xWJwZgt4xhKjzJ6nQkmVtg7JM8MEDfUkAw6q4xZXxMKddBW1TUSSunqtYrp9FSaVV9vi7JTuo1jSV",
       explorer:
-        "https://explorer.solana.com/tx/5eKTkFdcUSwfPbTdoLhuA9iYe4Xr4Cg3x8yM6amGFmwZ16bA4YfmdQhqNvcZ9f86UYecaCqz8RFwRZmv2dTg6ASf?cluster=devnet",
+        "https://explorer.solana.com/tx/22p3nCDbex6xWJwZgt4xhKjzJ6nQkmVtg7JM8MEDfUkAw6q4xZXxMKddBW1TUSSunqtYrp9FSaVV9vi7JTuo1jSV?cluster=devnet",
     },
   });
 }

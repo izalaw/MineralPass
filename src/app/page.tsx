@@ -262,9 +262,15 @@ export default function Home() {
 
         <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 md:p-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-blue-300">
-              Demo lot
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-blue-300">
+                Demo lot
+              </p>
+
+              <span className="rounded-full border border-emerald-300/20 bg-emerald-400/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-emerald-200">
+                Verified demo lot
+              </span>
+            </div>
 
             <h2 className="mt-4 text-3xl font-black">Lithium lot certificate</h2>
 
@@ -275,6 +281,16 @@ export default function Home() {
               <Info label="Origin" value={lot.origin} />
               <Info label="Volume" value={lot.volume} />
               <Info label="Lot hash" value={lotHash} mono />
+            </div>
+
+            <div className="mt-6 rounded-3xl border border-emerald-300/20 bg-emerald-400/10 p-5">
+              <p className="text-sm font-bold text-emerald-200">Verification layer</p>
+              <div className="mt-3 grid gap-2 text-sm text-slate-200">
+                <p>✓ Origin declared</p>
+                <p>✓ Lot hash generated</p>
+                <p>✓ Owner wallet required</p>
+                <p>✓ cNFT certificate issued on Solana</p>
+              </div>
             </div>
 
             <button
